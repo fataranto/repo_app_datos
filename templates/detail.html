@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+   <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js?2"></script>
+	<title>Detalle</title>
 </head>
 <body>
 	 <h1>Incendio de {{ object['COMUNIDAD'].decode('UTF-8') }}</h1>
+	 <div id="map" style="width:100%; height:300px;"></div>
+
 	  <p>En la comunidad {{ object['COMUNIDAD'].decode('UTF-8') }},
 			provincia {{ object['PROVINCIA'].decode('UTF-8') }},
 			comarca {{ object['COMARCA'].decode('UTF-8') }},
@@ -19,5 +23,17 @@
 			del incendio participaron {{ object['PERSONAL'] }} personas,
 			{{ object['PESADOS'] }} vehiculos pesados y {{ object['AEREOS'] }}
 			medios aereos.</p>
+
+		<script type="text/javascript">
+
+  			var map = L.map('map').setView([ {{ object['LATITUD'] }}, {{object['LONGITUD'] }}], 12);
+
+  			var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {maxZoom: 12,attribution: 'attribution [...]', subdomains: ['otile1','otile2','otile3','otile4']});
+
+  			map.addLayer(mapquestLayer);
+
+  			L.marker([{{ object['LATITUD'] }},{{ object['LONGITUD'] }}]).addTo(map);
+		</script>
+
 </body>
 </html>
